@@ -34,7 +34,41 @@
 ```
    python manage.py startapp main
 ```
-13. Membuat urls.py pada folder main untuk keperluan routing dengan isi berikut
+13.Membuat routing agar dapat melakukan routing ke aplikasi main dari root URL
+```
+from django.contrib import admin
+from django.urls import path, include
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('main/', include('main.urls')),
+]
+```
+   menambahkan include dan path 'main/'
+14. Membuat model pada folder main, seperti berikut
+```
+from django.db import models
+
+class Item(models.Model):
+    name = models.CharField(max_length=255)
+    amount = models.IntegerField()
+    price = models.IntegerField()
+    description = models.TextField()
+```
+15. Menambahkan method show_main pada views.py pada folder main untuk mengatasi request yang masuk ketika URL dihit
+```
+from django.shortcuts import render
+def show_main(request):
+    context = {
+        'name': 'Faris Zhafir Faza',
+        'class': 'PBP C'
+    }
+
+    return render(request, "main.html", context)
+```
+   context berisi nama dan kelas yang kemudian mengembalikan context dan juga main.html untuk merespon request dengan suatu halaman website
+16.  Membuat urls.py pada folder main untuk keperluan routing dengan isi berikut
 ```
 from django.urls import path
 from main.views import show_main
@@ -47,7 +81,6 @@ urlpatterns = [
 ```
   Melakukan import show_main dari main.views. show_main nantinya akan diimplementasikan pada tahap selanjutnya untuk menampilkan apa yang akan di tampilkan jika kita berada pada url 'main/'.
   app_name merupakan nama unik yang akan menjadi pola URL aplikasi
-14.
   
   
    
