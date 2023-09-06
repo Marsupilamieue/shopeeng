@@ -83,6 +83,12 @@ urlpatterns = [
   - Melakukan import show_main dari main.views. show_main nantinya akan diimplementasikan pada tahap selanjutnya untuk menampilkan apa yang akan di tampilkan jika kita berada pada url 'main/'.
   - app_name merupakan nama unik yang akan menjadi pola URL aplikasi
 17. Melakukan deployment di adaptable
+
+Bagan Hubungan antara views, urls, models, dan berkas html
+<img width="1228" alt="Screenshot 2023-09-06 at 19 03 41" src="https://github.com/Marsupilamieue/shopeeng/assets/111985990/395ab835-8989-49ea-a9dd-2a8c9e6d9fe6">
+
+Menggunakan virtual environment sangatlah penting karena dengan adanya virtual environment, project django akan lebih stabil, mudah direproduksi, dan bersifat portable. Adanya virtual environtment juga membuat project django kita terpisah atau dengan kata lain, project yang dibuat terisolasi agar tidak mengganggu proyek yang lain.
+
    
    
    
