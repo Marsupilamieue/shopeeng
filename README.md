@@ -68,6 +68,7 @@ def show_main(request):
     return render(request, "main.html", context)
 ```
    context berisi nama dan kelas yang kemudian mengembalikan context dan juga main.html untuk merespon request dengan suatu halaman website
+
 16.  Membuat urls.py pada folder main untuk keperluan routing dengan isi berikut
 ```
 from django.urls import path
