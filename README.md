@@ -85,9 +85,37 @@ urlpatterns = [
 17. Melakukan deployment di adaptable
 
 Bagan Hubungan antara views, urls, models, dan berkas html
-<img width="1228" alt="Screenshot 2023-09-06 at 19 03 41" src="https://github.com/Marsupilamieue/shopeeng/assets/111985990/395ab835-8989-49ea-a9dd-2a8c9e6d9fe6">
+<img width="600" alt="Screenshot 2023-09-06 at 19 03 41" src="https://github.com/Marsupilamieue/shopeeng/assets/111985990/395ab835-8989-49ea-a9dd-2a8c9e6d9fe6">
 
-Menggunakan virtual environment sangatlah penting karena dengan adanya virtual environment, project django akan lebih stabil, mudah direproduksi, dan bersifat portable. Adanya virtual environtment juga membuat project django kita terpisah atau dengan kata lain, project yang dibuat terisolasi agar tidak mengganggu proyek yang lain.
+- Jelaskan mengapa kita menggunakan virtual environment? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment?
+   Menggunakan virtual environment sangatlah penting karena dengan adanya virtual environment, project django akan lebih stabil, mudah direproduksi, dan bersifat portable. Adanya virtual environment juga membuat project django kita terpisah atau dengan kata lain, project yang dibuat terisolasi agar tidak mengganggu proyek yang lain. Pembuatan proyek django tanpa menggunakan virtual environment tetap bisa dilakukan, tetapi jika tidak menggunakan virtual environment kemungkinan akan terjadi konflik antara proyek django.
+
+- Jelaskan apakah itu MVC, MVT, MVVM dan perbedaan dari ketiganya
+   - MVC (Model-View-Controller):
+     
+   Model: Merupakan komponen yang mengatur data dan logika bisnis.
+   View: Bertanggung jawab untuk menampilkan tampilan yang diberikan kepada pengguna.
+   Controller: Bertindak sebagai perantara antara model dan view.
+   
+   - MVT (Model-View-Template):
+
+   Model: Merupakan komponen yang mengatur data dan logika bisnis.
+   View: Menangani tampilan yang diberikan kepada pengguna.
+   Template: Komponen yang mengelola tampilan HTML atau template yang disajikan kepada pengguna.
+
+   - MVVM (Model-View-ViewModel):
+
+   Model: Merupakan komponen yang mengatur data dan logika bisnis.
+   View: Ini adalah tampilan yang diberikan kepada pengguna.
+   ViewModel: Komponen yang berfungsi sebagai perantara antara model dan view. ViewModel mengubah data dari model ke format yang sesuai       untuk tampilan.
+
+Perbedaan utama antara ketiga pendekatan ini terletak pada cara mereka mengatur dan mengelola komunikasi antara model, tampilan, dan logika pengendali. MVC adalah pola desain yang lebih tua dan umumnya digunakan dalam pengembangan berbasis server, sedangkan MVT adalah MVC, tetapi memiliki perbedaan beberapa nama untuk beberapa komponen. MVVM adalah pola yang lebih modern dan umumnya digunakan dalam pengembangan aplikasi berbasis klien (seperti aplikasi web dengan JavaScript) untuk mengelola tampilan dan interaksi pengguna.
+
+
+
+
+
+
 
    
    
