@@ -1,5 +1,4 @@
 # Shopeeng
-# Link : shopeeng.adaptable.app/main/
 
 1. Membuat virtual environment dengan perintah
    ```
