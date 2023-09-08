@@ -18,6 +18,5 @@ class mainTest(TestCase):
     
     def test_main_page_context_data(self):
         response = Client().get('/main/')
-        # Add assertions to check specific context data in the response
         self.assertEqual(response.context['name'], 'Faris Zhafir Faza')
         
