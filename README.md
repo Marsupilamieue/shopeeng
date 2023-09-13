@@ -319,7 +319,22 @@ path('html/<int:id>/', show_html_by_id, name='show_html_by_id'),
 ```
 Untuk path yang perlu mangambil value id (dynamic url) maka perlu ditambahkan '/<int:id>/'.
 
+<hr>
 
+Screenshot saat menembak url ``` http://localhost:8000/json```
+<img width="1440" alt="Screenshot 2023-09-13 at 16 40 23" src="https://github.com/Marsupilamieue/shopeeng/assets/111985990/88a8e184-9104-488f-be35-4aa13f91863f">
+
+Screenshot saat menembak url ``` http://localhost:8000/xml```
+<img width="1440" alt="Screenshot 2023-09-13 at 16 40 29" src="https://github.com/Marsupilamieue/shopeeng/assets/111985990/5632652c-2002-4c86-a916-90c2ebed610b">
+
+Screenshot saat menembak url ``` http://localhost:8000/html```
+<img width="1440" alt="Screenshot 2023-09-13 at 16 40 15" src="https://github.com/Marsupilamieue/shopeeng/assets/111985990/658bd5be-ff68-4868-9adc-32c7d70f8459">
+
+Screenshot saat menembak url ``` http://localhost:8000/html/1```
+<img width="1440" alt="Screenshot 2023-09-13 at 16 40 48" src="https://github.com/Marsupilamieue/shopeeng/assets/111985990/9c98aedc-ec1a-4b2d-910a-6f4bf3dc4a7f">
+
+Screenshot saat menembak url ``` http://localhost:8000/xml/1```
+<img width="1440" alt="Screenshot 2023-09-13 at 16 40 40" src="https://github.com/Marsupilamieue/shopeeng/assets/111985990/b0533d34-8bdd-4e3e-b6f9-d4a6e0ece266">
 
 
 
