@@ -119,8 +119,11 @@ Perbedaan utama antara ketiga pendekatan ini terletak pada cara mereka mengatur 
 2. Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
 
    JSON: JSON sangat mudah untuk dimengerti. JSON digunakan pada banyak aplikasi web maupun mobile, yaitu untuk menyimpan dan mengirimkan data. Format JSON berbentuk text sehingga kode untuk membaca dan membuat JSON banyak terdapat dibanyak bahasa pemrograman.
+
    XML: XML adalah self-descriptive, jadi dengan membaca XML tersebut kita bisa mengerti informasi apa yang ingin disampaikan dari data yang tertulis. XML digunakan pada banyak aplikasi web maupun mobile, yaitu untuk menyimpan dan mengirimkan data. XML berisi informasi yang dibungkus di dalam tag.
+   
    HTML: HTML digunakan untuk menampilkan informasi dalam bentuk halaman web yang dapat dilihat oleh pengguna akhir. Ini adalah format yang digunakan untuk merender tampilan dan konten dalam browser web. HTML bukan format yang cocok untuk pertukaran data struktural, tetapi lebih untuk presentasi dan tampilan.
+
 3. Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?
 
    Karena JSON didesain menjadi self-describing, sehingga JSON sangat mudah untuk dimengerti, selain itu JSON berbentuk text, sehingga kode untuk membaca dan membuat JSON banyak terdapat dibanyak bahasa pemrograman
@@ -140,9 +143,7 @@ class ItemForm(ModelForm):
         fields = ["name", "price", "amount", "description"]
 
 ```
-```
-model = Item 
-```
+```model = Item ```
 artinya adalah model yang dipakai adalah model Item. Fields menunjukan apa saja yang akan menjadi input user. date_add tidak ditambahkan karena dari models, date_add sudah di auto ditambahkan saat item tersebut dibuat.
 
 2. Mengimport beberapa moddule dan juga membuat fungsi untuk menghasilkan form yang dapat menambahkan item saat button submit ditekan
