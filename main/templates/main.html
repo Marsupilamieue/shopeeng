@@ -17,6 +17,7 @@
           <th>Amount</th>
           <th>Description</th>
           <th>Date Added</th>
+          <th>Action</th>
       </tr>
   
     <hr>
@@ -29,16 +30,35 @@
               <td>{{item.amount}}</td>
               <td>{{item.description}}</td>
               <td>{{item.date_added}}</td>
+              <td>
+                <form action="{% url 'main:add_amount' item.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="Increment">Add Amount</button>
+                </form>
+            </td>
+            <td>
+                <form action="{% url 'main:remove_item' item.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="Remove">Delete Item</button>
+                </form>
+            </td>
+
           </tr>
       {% endfor %}
   </table>
   
   <br />
   
+  <h5>Sesi terakhir login: {{ last_login }}</h5>
   <a href="{% url 'main:create_item' %}">
       <button>
           Add New Product
       </button>
   </a>
+  <a href="{% url 'main:logout' %}">
+    <button>
+        Logout
+    </button>
+</a>
 
 {% endblock content %}
