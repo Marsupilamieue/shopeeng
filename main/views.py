@@ -69,6 +69,14 @@ def add_amount(request, item_id):
         item.save()
     return redirect('/')
 
+def delete_amount(request, item_id):
+    if request.method == 'POST' and 'Decrement' in request.POST:
+        item = Item.objects.get(id=item_id)
+        if item.amount > 0 :
+            item.amount -= 1
+        item.save()
+    return redirect('/')
+
 def remove_item(request, item_id):
     if request.method == 'POST' and 'Remove' in request.POST:
         item = Item.objects.get(id=item_id)

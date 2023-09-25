@@ -14,7 +14,9 @@
       <tr>
           <th>Name</th>
           <th>Price</th>
+          <th></th>
           <th>Amount</th>
+          <th></th>
           <th>Description</th>
           <th>Date Added</th>
           <th>Action</th>
@@ -27,15 +29,23 @@
           <tr>
               <td>{{item.name}}</td>
               <td>{{item.price}}</td>
-              <td>{{item.amount}}</td>
-              <td>{{item.description}}</td>
-              <td>{{item.date_added}}</td>
               <td>
                 <form action="{% url 'main:add_amount' item.id %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" name="Increment">Add Amount</button>
+                {% csrf_token %}
+                <button type="submit" name="Increment">+</button>
                 </form>
             </td>
+              <td>
+                {{item.amount}}
+                </td>
+                <td>
+                    <form action="{% url 'main:delete_amount' item.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" name="Decrement">-</button>
+                    </form>
+                </td>
+              <td>{{item.description}}</td>
+              <td>{{item.date_added}}</td>
             <td>
                 <form action="{% url 'main:remove_item' item.id %}" method="post">
                     {% csrf_token %}
