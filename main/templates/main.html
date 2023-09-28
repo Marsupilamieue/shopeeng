@@ -1,74 +1,53 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Welcome to Shopeeng</h1>
-    <hr>
 
-    <h5>Name:</h5>
-    <p>{{name}}</p>
+{% include 'navbar.html' %}
 
-    <h5>Class:</h5>
-    <p>{{class}}</p>
-
-    <table>
-      <tr>
-          <th>Name</th>
-          <th>Price</th>
-          <th></th>
-          <th>Amount</th>
-          <th></th>
-          <th>Description</th>
-          <th>Date Added</th>
-          <th>Action</th>
-      </tr>
-  
-    <hr>
-      
-      <p>Kamu menyimpan {{total_items}} item pada aplikasi ini</p>
-      {% for item in items %}
-          <tr>
-              <td>{{item.name}}</td>
-              <td>{{item.price}}</td>
-              <td>
-                <form action="{% url 'main:add_amount' item.id %}" method="post">
-                {% csrf_token %}
-                <button type="submit" name="Increment">+</button>
-                </form>
-            </td>
-              <td>
-                {{item.amount}}
-                </td>
-                <td>
-                    <form action="{% url 'main:delete_amount' item.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" name="Decrement">-</button>
-                    </form>
-                </td>
-              <td>{{item.description}}</td>
-              <td>{{item.date_added}}</td>
-            <td>
+<div class="px-4 ">
+    <h1 class="text-4xl my-7 ml-7 font-bold font-sans">Hello {{ name}} from {{ class}}!</h1>
+    <div class="flex justify-between">
+        {% if items %}
+            <h1 class="font-extrabold text-5xl text-black">Daftar Barang</h1>
+        {% else %}
+        <h1 class="font-extrabold text-5xl text-black">Tambah Barang Dulu Yukk</h1>
+        {% endif %}
+        <a href="{% url 'main:create_item' %}" class="flex w-fit justify-self-end text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-4 mr-2 mb-2 focus:outline-none">
+            <button>
+              Add New Product
+            </button>
+        </a>
+    </div>
+    <div class="flex flex-wrap justify-center">
+        {% for item in items %}
+        <div class="w-[300px] m-4 h-[350px] p-6 bg-white border border-gray-200 rounded-lg shadow-xl">
+            <div class="flex justify-between">
+                <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 ">{{item.name}}</h5>
                 <form action="{% url 'main:remove_item' item.id %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" name="Remove">Delete Item</button>
+                    <button type="submit" name="Remove" class="btn btn-danger focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-1.5 mb-2">Delete</button>
                 </form>
-            </td>
-
-          </tr>
-      {% endfor %}
-  </table>
-  
-  <br />
-  
-  <h5>Sesi terakhir login: {{ last_login }}</h5>
-  <a href="{% url 'main:create_item' %}">
-      <button>
-          Add New Product
-      </button>
-  </a>
-  <a href="{% url 'main:logout' %}">
-    <button>
-        Logout
-    </button>
-</a>
-
+            </div>
+            <div class="bg-slate-500 h-[150px]"> h </div>
+            <p class="my-3 font-normal text-gray-700 ">{{item.description}}</p>
+            <div class="flex justify-between">
+                <p class="text-xl font-bold text-gray-900 ">Rp.{{item.price}}</p>
+                <a>{{item.amount}} items</a>
+            </div>
+            <div class="flex justify-end">
+                <form action="{% url 'main:add_amount' item.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="Increment" class="btn btn-primary text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1.5 mr-2 mb-2 focus:outline-none">+</button>
+                    </form>
+                <form action="{% url 'main:delete_amount' item.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="Decrement" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-1.5 mr-2 mb-2">-</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <h5 class="mt-4">Sesi terakhir login: {{ last_login }}</h5>
+</div>
+    
 {% endblock content %}

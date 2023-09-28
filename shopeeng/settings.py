@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,10 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure--)$w07in_!^o_!#r%@@2ahejrkru7c=80-s(xsr^9g8gy%av*+'
 
+PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
+STATIC_ROOT = os.path.join(PROJECT_PATH, 'static')
+STATIC_URL = 'static'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+TAILWIND_APP_NAME = 'theme'
 
 
 # Application definition
@@ -37,7 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main'
+    'main',
+    'tailwind',
+    'theme',
 ]
 
 MIDDLEWARE = [
@@ -98,6 +106,10 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
 
 
