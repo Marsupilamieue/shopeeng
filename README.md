@@ -640,6 +640,58 @@ Jawab: Tidak aman, cookies berisi data-data sensitif seperti informasi login, to
     last_login didapatkan dari context pada show_main
     
 <hr>
+
+# Tugas 5
+
+1. Jelaskan manfaat dari setiap element selector dan kapan waktu yang tepat untuk menggunakannya. 
+Jawab: 
+   - Universal Selector:
+     - Manfaat: Memilih semua elemen dalam dokumen HTML.
+     - Biasanya digunakan untuk memberikan style dasar atau reset CSS di seluruh dokumen, tetapi penggunaan berlebihan dapat mempengaruhi kinerja.
+   - Type Selector:
+     - Manfaat: Memilih semua elemen dengan tipe tertentu (misalnya, ```<p>, <h1>, <div>```) dalam dokumen.
+     - Biasanya digunakan saat ingin memberikan style untuk semua elemen dengan tipe tertentu.
+   - Class Selector:
+     - Manfaat: Memilih semua elemen yang memiliki atribut class dengan nilai tertentu.
+     - Berguna saat ingin memberikan style yang sama untuk beberapa elemen yang memiliki kelas yang sama.
+   - ID Selector:
+     - Manfaat: Memilih elemen dengan atribut id tertentu, yang harus unik dalam satu halaman HTML.
+     - Berguna saat ingin memberikan style untuk elemen tunggal dengan id tertentu.
+   - Descendant Selector (Selektor Turunan):
+     - Manfaat: Memilih elemen yang merupakan turunan dari elemen lain.
+     - Berguna saat ingin memberikan style yang berada dalam elemen lain, terutama jika ingin membatasi seleksi hanya pada elemen tertentu dalam hirarki dokumen.
+   - Child Selector:
+     - Manfaat: Memilih elemen yang menjadi child dari elemen lain.
+     - Digunakan saat ingin memilih elemen yang adalah child dari elemen lain dalam hirarki.
+   - Adjacent Sibling Selector:
+     - Manfaat: Memilih elemen yang selevel dengan elemen lain dan memiliki elemen yang sama parent.
+     - Berguna saat ingin memberikan style untuk elemen yang berdekatan secara langsung dengan elemen lain.
+   - Attribute Selector :
+     - Manfaat: Memilih elemen dengan atribut atau atribut tertentu dengan nilai tertentu.
+     - Digunakan saat ingin memberikan style berdasarkan atribut atau nilai atribut elemen.
+
+2. Jelaskan HTML5 Tag yang kamu ketahui.
+Jawab: 
+- ```<nav>```: Mengidentifikasi elemen sebagai menu navigasi untuk situs web atau bagian halaman tertentu. Ini dapat berisi tautan menu atau elemen-elemen navigasi lainnya.
+- ```<div```: Digunakan untuk mengelompokkan dan mengorganisasi elemen-elemen HTML dalam satu blok kontainer.
+- ```<p>```: Digunakan untuk menampilkan teks paragraf atau konten teks yang terstruktur.
+- ```<ul>```:  Digunakan untuk membuat daftar yang tidak memiliki urutan tertentu. Biasanya digunakan dengan elemen ```<li>```.
+- ```<li>```: Digunakan dalam elemen ```<ul>``` atau ```<ol>``` untuk mendefinisikan item dalam daftar.
+- ```<span>```: Digunakan untuk mengelompokkan elemen teks atau inline lainnya dalam dokumen dan memberikan style.
+- ```<h>```: (```<h1>``` hingga ```<h6>```) digunakan untuk menandai tingkat hierarki judul dalam dokumen, dengan `<h1>` menjadi judul utama dan `<h6>` menjadi judul terendah.
+- ```<table>```: digunakan untuk membuat tabel dalam dokumen, yang terdiri dari baris dan kolom.
+- ```<form>```: digunakan untuk membuat formulir yang memungkinkan pengguna untuk mengirim data ke server.
+
+3. Jelaskan perbedaan antara margin dan padding
+Jawab: 
+- Margin:
+Margin adalah ruang di luar batas luar elemen, yaitu jarak antara elemen dan elemen-elemen lain di sekitarnya.
+Margin dapat digunakan untuk mengatur jarak antara elemen dengan elemen lain di luarnya sehingga memengaruhi tata letak elemen tersebut terhadap elemen-elemen tetangganya.
+- Padding:
+Padding adalah ruang di antara batas elemen dan konten di dalamnya, yaitu jarak antara batas dalam elemen dan kontennya sendiri.
+Padding digunakan untuk mengatur jarak antara konten elemen dan batas elemen itu sendiri.
    
-   
-   
+4. Jelaskan perbedaan antara framework CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya
+Jawab: 
+- Tailwind CSS: Framework CSS yang memiliki pendekatan "utility-first." yang artinya membangun tampilan dengan menggabungkan kelas-kelas kecil yang mewakili properti CSS, seperti mb-4 untuk margin bawah atau text-red-500 untuk warna teks merah. Sebaiknya kita menggunakan tailwind jika kita ingin kontrol yang lebih besar pada setiap properti CSS dan tampilan yang sangat disesuaikan atau ingin membangun tampilan dengan cepat menggunakan kelas-kelas utilitas.
+- Bootstrap: Bootstrap memiliki desain yang lebih "opinionated" dengan komponen-komponen yang telah dirancang sebelumnya. Kita lebih banyak menggunakan kelas komponen daripada mengatur properti CSS satu per satu. Sebaiknya kita menggunakan bootstrap jika kita ingin cepat membangun tampilan dengan komponen-komponen yang sudah dirancang sebelumnya atau tidak memiliki banyak pengalaman dalam penyesuaian tampilan dengan CSS atau ingin menghindari pengetikan CSS yang berlebihan
