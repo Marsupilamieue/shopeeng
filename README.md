@@ -695,3 +695,181 @@ Padding digunakan untuk mengatur jarak antara konten elemen dan batas elemen itu
 Jawab: 
 - Tailwind CSS: Framework CSS yang memiliki pendekatan "utility-first." yang artinya membangun tampilan dengan menggabungkan kelas-kelas kecil yang mewakili properti CSS, seperti mb-4 untuk margin bawah atau text-red-500 untuk warna teks merah. Sebaiknya kita menggunakan tailwind jika kita ingin kontrol yang lebih besar pada setiap properti CSS dan tampilan yang sangat disesuaikan atau ingin membangun tampilan dengan cepat menggunakan kelas-kelas utilitas.
 - Bootstrap: Bootstrap memiliki desain yang lebih "opinionated" dengan komponen-komponen yang telah dirancang sebelumnya. Kita lebih banyak menggunakan kelas komponen daripada mengatur properti CSS satu per satu. Sebaiknya kita menggunakan bootstrap jika kita ingin cepat membangun tampilan dengan komponen-komponen yang sudah dirancang sebelumnya atau tidak memiliki banyak pengalaman dalam penyesuaian tampilan dengan CSS atau ingin menghindari pengetikan CSS yang berlebihan
+
+# Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
+
+1. Menginstal tailwind di django dengan mengikuti link https://django-tailwind.readthedocs.io/en/latest/installation.html
+2. Kustomisasi halaman login, register, dan tambah inventori semenarik mungkin. 
+- ```login.html```
+```html
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Login</title>
+{% endblock meta %}
+
+{% block content %}
+{% include 'navbar.html'%}
+
+<div class = "login w-full mt-20 max-h-screen flex justify-center content-center">
+    <div class="bg-slate-100 py-10 px-20 m-4 w-auto rounded-lg shadow-xl">
+        <h1 class="text-5xl font-extrabold mt-4 mb-6">Login</h1>
+        <form method="POST" action="" class="my-4">
+            {% csrf_token %}
+            <div class="mb-6">
+              <label for="text" class="block mb-2 text-sm font-medium text-gray-900">Username</label>
+              <input  type="text" name="username" class="form-control shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Username" required>
+            </div>
+            <div class="mb-6">
+              <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
+              <input type="password" name="password" class="form-control shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Password" required>
+            </div>
+            <button type="submit" value="Login" class="btn login_btn text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Login</button>
+          </form>   
+            Don't have an account yet? <a class="text-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm" href="{% url 'main:register' %}">Register</a>
+        {% if messages %}
+            {% for message in messages %}
+                <p class="text-red-600">{{ message }}</p>
+            {% endfor %}
+        {% endif %}  
+    </div>
+</div>
+
+{% endblock content %}
+```
+- ```register.html```
+```html
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Register</title>
+{% endblock meta %}
+
+{% block content %}  
+{% include 'navbar.html' %}
+
+<div class = "login w-full mt-10 max-h-screen flex justify-center content-center">
+    <div class="bg-slate-100 py-10 px-20 m-4 w-auto rounded-lg shadow-xl">
+        <h1 class="text-5xl font-extrabold mt-4 mb-6">Register</h1>
+        <form method="POST" >  
+            {% csrf_token %}  
+            {% for field in form %}
+            <p class="my-2 flex flex-col">
+                {% if field.errors %}
+                <ul class="errorlist">
+                    {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <p class="block mb-2 text-sm font-medium text-gray-900">
+                    {{ field.label_tag }}
+                </p>
+                <p class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    {{ field }}
+                </p>
+            </p>
+            {% endfor %}
+            <input type="submit" name="submit" value="Daftar" class="btn login_btn text-white my-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"/>
+        </form> 
+            Have an account? <a class="text-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm" href="{% url 'main:login' %}">Sign In</a>
+        {% if messages %}
+            {% for message in messages %}
+                <p class="text-red-600">{{ message }}</p>
+            {% endfor %}
+        {% endif %}  
+    </div>
+</div>
+
+{% endblock content %}
+```
+- ```create_item.html```
+```html
+{% extends 'base.html' %} 
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="px-4">
+    <h1 class="text-5xl font-extrabold my-4">Add New Item</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Add Item" class="btn btn-primary text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-3.5 mr-2 mb-2 focus:outline-none"/>
+                    <a href="/">
+                        <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-3.5 mr-2 mb-2">
+                            Cancel
+                        </button>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+{% endblock %}
+```
+3.  Kustomisasi halaman daftar inventori menjadi lebih berwarna maupun menggunakan apporach lain seperti menggunakan Card. 
+
+- Melakukan kostumisasi pada tampilan utama dengan menerapkan card untuk menampung barang dan menerapkan warna transparant untuk item yang berbeda.
+
+- ```main.html```
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include 'navbar.html' %}
+
+<div class="px-4 ">
+    <h1 class="text-4xl my-7 ml-7 font-bold font-sans">Hello {{ name}} from {{ class}}!</h1>
+    <div class="flex justify-between">
+        {% if items %}
+            <h1 class="font-extrabold text-5xl text-black">Daftar Barang</h1>
+        {% else %}
+        <h1 class="font-extrabold text-5xl text-black">Tambah Barang Dulu Yukk</h1>
+        {% endif %}
+        <a href="{% url 'main:create_item' %}" class="flex w-fit justify-self-end text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-4 mr-2 mb-2 focus:outline-none">
+            <button>
+              Add New Product
+            </button>
+        </a>
+    </div>
+    <div class="flex flex-wrap justify-center">
+        {% for item in items %}
+        <div class="w-[300px] m-4 h-[350px] p-6 {% if forloop.last %} bg-transparent {% else %}bg-white{% endif %} border border-gray-200 rounded-lg shadow-xl">
+            <div class="flex justify-between">
+                <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 ">{{item.name}}</h5>
+                <form action="{% url 'main:remove_item' item.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="Remove" class="btn btn-danger focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-1.5 mb-2">Delete</button>
+                </form>
+            </div>
+            <div class="bg-slate-500 h-[150px]"> h </div>
+            <p class="my-3 font-normal text-gray-700 ">{{item.description}}</p>
+            <div class="flex justify-between">
+                <p class="text-xl font-bold text-gray-900 ">Rp.{{item.price}}</p>
+                <a>{{item.amount}} items</a>
+            </div>
+            <div class="flex justify-end">
+                <form action="{% url 'main:add_amount' item.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="Increment" class="btn btn-primary text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1.5 mr-2 mb-2 focus:outline-none">+</button>
+                    </form>
+                <form action="{% url 'main:delete_amount' item.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="Decrement" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-1.5 mr-2 mb-2">-</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <h5 class="mt-4">Sesi terakhir login: {{ last_login }}</h5>
+</div>
+    
+{% endblock content %}
+```
+- ```{% if forloop.last %} bg-transparent {% else %}bg-white{% endif %}``` menambahkan pada class agar ketika item tersebut adalah item yang terakhir, warnanya berbeda dengan barang yang lain.
