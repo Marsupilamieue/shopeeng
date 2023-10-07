@@ -6,6 +6,9 @@
 
 <div class="px-4 ">
     <h1 class="text-4xl my-7 ml-7 font-bold font-sans">Hello {{ name}} from {{ class}}!</h1>
+    <h1 class="font-extrabold text-xl text-black">
+        Kamu Menyimpan {{total_items}} item
+    </h1>
     <div class="flex justify-between" id="msgcontainer">
         <h1 id="msgtext" class="font-extrabold text-5xl text-black"></h1>
         <div class="flex">
@@ -105,7 +108,7 @@
     refreshItems()
 
     function addItem() {
-        fetch("{% url 'main:add_item_ajax' %}", {
+        fetch("{% url 'main:create_ajax' %}", {
             method: "POST",
             body: new FormData(document.querySelector('#form'))
         }).then(refreshItems)

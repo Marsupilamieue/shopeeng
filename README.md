@@ -873,3 +873,201 @@ Jawab:
 {% endblock content %}
 ```
 - ```{% if forloop.last %} bg-transparent {% else %}bg-white{% endif %}``` menambahkan pada class agar ketika item tersebut adalah item yang terakhir, warnanya berbeda dengan barang yang lain.
+
+<hr>
+
+# Tugas 6
+
+1. Jelaskan perbedaan antara asynchronous programming dengan synchronous programming.
+
+    Synchronous Programming adalah kode dieksekusi secara berurutan. Artinya, satu operasi harus selesai sebelum operasi berikutnya dimulai. Jika ada operasi yang membutuhkan waktu lama untuk menyelesaikan seluruh program akan menunggu sampai operasi tersebut selesai. 
+
+    Asynchronous Programming adalah operasi yang membutuhkan waktu lama untuk menyelesaikan dapat dijalankan secara paralel dengan operasi lain. kode tidak perlu menunggu operasi tersebut selesai sebelum melanjutkan ke operasi berikutnya. Sebaliknya, kita dapat menjalankan operasi tersebut, melanjutkan ke tugas berikutnya, dan kemudian kembali ke operasi tersebut ketika sudah selesai. 
+
+2. Dalam penerapan JavaScript dan AJAX, terdapat penerapan paradigma event-driven programming. Jelaskan maksud dari paradigma tersebut dan sebutkan salah satu contoh penerapannya pada tugas ini.
+
+    Event-Driven Programming adalah paradigma pemrograman di mana alur program ditentukan oleh peristiwa seperti input pengguna, sensor output, atau pesan dari program lain. Biasanya dipicu oleh aksi pengguna seperti klik mouse, ketukan keyboard, atau interaksi lainnya dengan antarmuka pengguna.
+    Contohnya adalah menambahkan item melalui modal, dengan kita menekan tombol add item pada modal
+    ```java
+    function addItem() {
+        fetch("{% url 'main:create_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        }).then(refreshItems)
+
+        document.getElementById("form").reset()
+        return false
+    }
+    document.getElementById("button_add").onclick = addItem
+    ```
+    Fungsi ```addItem()``` dipanggil ketika tombol dengan id ‘button_add’ diklik oleh pengguna.
+
+3. Jelaskan penerapan asynchronous programming pada AJAX.
+
+    Asynchronous JavaScript dan XML (AJAX) adalah teknik yang digunakan dalam pengembangan web untuk membuat aplikasi web yang interaktif. Dengan AJAX, aplikasi web dapat mengirim dan menerima data dari server secara asynchronous tanpa mengganggu perilaku halaman itu sendiri. Berarti halaman web tidak perlu dimuat ulang setiap kali data dikirim atau diterima dari server yang membuat aplikasi web lebih responsif dan user-friendly.
+
+4. Pada PBP kali ini, penerapan AJAX dilakukan dengan menggunakan Fetch API daripada library jQuery. Bandingkanlah kedua teknologi tersebut dan tuliskan pendapat kamu teknologi manakah yang lebih baik untuk digunakan.
+
+    - Ukuran: jQuery adalah library yang cukup besar dan jika Anda hanya menggunakan AJAX, mungkin sebagian besar kode jQuery tidak digunakan. Di sisi lain, Fetch API adalah fitur bawaan dari JavaScript modern dan tidak memerlukan library tambahan.
+    - Kemudahan Penggunaan: jQuery menyediakan metode .ajax() yang sangat kuat dan fleksibel, yang dapat disesuaikan dengan berbagai kebutuhan. Di sisi lain, Fetch API memiliki sintaks yang lebih modern dan ringkas.
+    - Penggunaan Promise: Fetch API menggunakan Promise secara native, yang membuat penanganan asynchronous lebih mudah dan kode lebih mudah dibaca. Di sisi lain, meskipun jQuery memiliki metode .promise() dan bisa bekerja dengan Promise, metode .ajax() secara default menggunakan callback.
+
+    Menurut saya, Fetch API lebih baik karena menggunakan sintaks yang lebih modern dan mudah dibaca. Ini juga menggunakan Promise, yang membuat penanganan operasi asynchronous menjadi lebih mudah dan kode lebih rapi.
+
+5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)
+
+    - AJAX GET
+        
+        Mengubah kode tabel data item agar dapat mendukung AJAX GET.
+        ```html
+        <div id="item_card" class="flex flex-wrap justify-center"></div>
+        ```
+        Menghapus isi dari tabel dan memberikan 
+        ```id="item_card"```
+
+        Menambahkan tag ```<script></script>``` dan mengisinya dengan fungsi get
+        ```python
+        def get_item_json(request):
+            product_item = Item.objects.filter(user=request.user)
+            return HttpResponse(serializers.serialize('json', product_item))
+        ```
+        Menambahkan pathnya pada urls.py
+        ```python
+        path('get-item/', get_item_json, name='get_item_json'),
+        ```
+        Menambahkan fungsi getItem untuk mengambil item yang ditambahkan oleh user tersebut.
+        ```javascript
+            async function getItems() {
+                return fetch("{% url 'main:get_item_json' %}").then((res) => res.json())
+            }
+        ```
+        ```getItems()``` melakukan fetch data dengan menjalankan method ```get_item_json``` yang berada pada views.py yang hasilnya dari responsenya dikirimkan dalam format json.
+
+        Menambahkan fungsi refreshItems yang berfungsi untuk mengupdate item setiap kali item bertambah dan juga mengeset item agar dapat masuk kedalam web dalam bentuk card.
+        ```java
+            async function refreshItems() {
+            document.getElementById("item_card").innerHTML = ""
+            const items = await getItems()
+            if(items.length > 0){
+                messageText.textContent = "Daftar Barang";
+            }else{
+                messageText.textContent = "Tambah Barang Dulu Yukk";
+            }
+            let htmlString = ``
+            items.forEach((item, index, array) => {
+                const isLastItem = index === array.length - 1;
+                htmlString += `\n
+                <div id="item_card" class="w-[300px] m-4 h-[350px] p-6 ${isLastItem ? 'bg-transparent' : 'bg-white'} border border-gray-200 rounded-lg shadow-xl">
+                <div class="flex justify-between">
+                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 ">${item.fields.name}</h5>
+                    <button type="submit" onclick="deleteItem(${item.pk}); return false;" name="Remove" class="btn btn-danger focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-1.5 mb-2">Delete</button>
+                </div>
+                <div class="bg-slate-500 h-[150px]"> h </div>
+                <p class="my-3 font-normal text-gray-700 ">${item.fields.description}</p>
+                <div class="flex justify-between">
+                    <p class="text-xl font-bold text-gray-900 ">Rp.${item.fields.price}</p>
+                    <a>${item.fields.amount} items</a>
+                </div>
+                <div class="flex justify-end">
+                    <a href="add/${item.pk}">
+                        <button type="submit" name="Increment" class="btn btn-primary text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1.5 mr-2 mb-2 focus:outline-none">+</button>
+                    </a>
+                    <a href="delete/${item.pk}">
+                        <button type="submit" name="Decrement" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-1.5 mr-2 mb-2">-</button>
+                    </a>
+                </div>
+            </div>
+                ` 
+            })
+            document.getElementById("item_card").innerHTML = htmlString
+        }
+        ```
+    - AJAX POST
+        
+        Menambahkan Modal
+        ```html
+        <div id="modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-md max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <div class="px-6 py-6 lg:px-8">
+                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add Item</h3>
+                    <form class="space-y-6" id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div>
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                            <input type="text" name="name" id="name" class="form-control border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Pensil" required>
+                        </div>
+                        <div>
+                            <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+                            <input type="number" name="price" id="price" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="2000" required>
+                        </div>
+                        <div>
+                            <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount</label>
+                            <input type="number" name="amount" id="amount" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="4" required>
+                        </div>
+                        <div>
+                            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                            <textarea name="description" id="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Pensil ini adalah" required></textarea>
+                        </div>
+                        <button type="button" id="button_add" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" data-modal-hide="modal">Add Item</button>
+                        <button type="button" class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center " data-modal-hide="modal">Cancel</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        ```
+        Membuat sebuah button yang berfungsi untuk membuka modal dengan form untuk menambahkan item.
+        ```html
+        <button data-modal-target="modal" data-modal-toggle="modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center 0" type="button">
+                Add New Product Modal
+        </button>
+        ```
+        Membuat fungsi create_ajax untuk menambahkan item dengan menggunakan ajax. Kemudian method ini akan mengambil nilai dari form yang sudah diisi kemudian menambahkan item sesuai dengan data dan menyimpanya ke database.
+        ```python
+        @csrf_exempt
+        def create_ajax(request):
+            if request.method == 'POST':
+                name = request.POST.get("name")
+                price = request.POST.get("price")
+                amount = request.POST.get("amount")
+                description = request.POST.get("description")
+                user = request.user
+
+                new_item = Item(name=name, price=price, description=description, amount=amount, user=user)
+                new_item.save()
+
+                return HttpResponse(b"CREATED", status=201)
+
+            return HttpResponseNotFound()
+        ```
+        Membuat path fungsi ```create_ajax``
+        ```python
+        path('create-ajax/', create_ajax, name='create_ajax'),
+        ```
+        Menghubungkan form modal yang ada dalam main.html ke path ```create_ajax``` degan cara menambahkan funsi ```addItem()``` di dalam tag ```<script></script>```
+        ```javascript
+        ...
+        function addItem() {
+            fetch("{% url 'main:create_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshItems)
+
+            document.getElementById("form").reset()
+            return false
+        }
+        ...
+        ```
+        Menambahkan ```refreshItems()``` untuk menampilkan daftar item terbaru tanpa reload halaman utama secara keseluruhan
+        ```javascript
+        refreshItems()
+        ```
+    - Menjalankan ```python manage.py collectstatic``` untuk mengumpulkan file static dari setiap aplikasi dalam suatu folder yang dapat dengan mudah disajikan pada produksi
