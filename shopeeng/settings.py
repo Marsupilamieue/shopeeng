@@ -24,10 +24,10 @@ env = environ.Env()
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure--)$w07in_!^o_!#r%@@2ahejrkru7c=80-s(xsr^9g8gy%av*+'
 PRODUCTION = env.bool('PRODUCTION', False)
+
 PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
 STATIC_ROOT = os.path.join(PROJECT_PATH, 'static')
 STATIC_URL = 'static'
-STATIC_URL = 'static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
@@ -139,6 +139,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
