@@ -22,4 +22,5 @@ urlpatterns = [
     path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),
     path('html/<int:id>/', show_html_by_id, name='show_html_by_id'),
     path('create-flutter/', create_item_flutter, name='create_item_flutter'),
+    path('jsonf/',show_json_user, name='show_json_user'),
 ]

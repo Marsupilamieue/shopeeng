@@ -130,6 +130,10 @@ def show_json(request):
     data = Item.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
+def show_json_user(request):
+    data = Item.objects.filter(user = request.user)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
 def show_html(request):
     data = Item.objects.all()
     return render(request, 'items.html', {'items': data})
