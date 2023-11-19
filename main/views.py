@@ -161,7 +161,7 @@ def create_item_flutter(request):
             name = data["name"],
             price = int(data["price"]),
             description = data["description"],
-            amount = data["amount"]
+            amount = int(data["amount"])
         )
 
         new_item.save()
