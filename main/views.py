@@ -157,7 +157,7 @@ def create_item_flutter(request):
         data = json.loads(request.body)
 
         new_item = Item.objects.create(
-            user = request.user,
+            user = data['user'],
             name = data["name"],
             price = int(data["price"]),
             description = data["description"],
